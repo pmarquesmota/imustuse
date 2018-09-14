@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\UrlApi;
+use Log;
 
 class UrlController extends Controller
 {
@@ -23,7 +24,11 @@ public function index() {
 
 public function store(Request $request)
     {
-        return response()->json(UrlApi::create($request->all()));
+		$url = new UrlApi;
+		$url->href = $request->href;
+		$url->category_id= $request->category_id;
+		$url->save();
+        return response()->json($url);
     }
 
 public function destroy($id)
